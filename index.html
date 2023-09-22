@@ -1,0 +1,65 @@
+<html lang="pt-br">
+	<head>
+		<meta charset="utf-8">
+		<title>App Pesquisa Endereço</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<script>
+			function retornaCEP(cep){
+			
+					let url = 'http://viacep.com.br/ws/'+cep+'/json/'
+					
+
+					let xmlhttp = new XMLHttpRequest()
+					xmlhttp.open('GET', url)
+					xmlhttp.onreadystatechange = () => {
+						if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+							let dadosJSON = JSON.parse(xmlhttp.responseText)
+							console.log(dadosJSON)
+							document.getElementById('rua').value= dadosJSON.logradouro
+							document.getElementById('bairro').value = dadosJSON.bairro
+							document.getElementById('cidade').value = dadosJSON.localidade
+							document.getElementById('estado').value = dadosJSON.uf
+
+						}
+					}
+					xmlhttp.send()
+
+				}
+			
+		</script>
+	</head>
+	<body>
+		
+		<nav class="navbar navbar-light bg-light mb-4">
+			<div class="container">
+				<div class="navbar-brand mb-0 h1">
+					<h3>App Pesquisa Endereço</h3>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container">
+			<div class="row form-group">
+				<div class="col-sm-3">
+					<input type="text" class="form-control" placeholder="CEP" onblur="retornaCEP(this.value)"/>
+				</div>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" placeholder="Endereço" readonly id="rua"/>
+				</div>
+			</div>
+
+			<div class="row form-group">
+				<div class="col-sm-6">
+					<input type="text" class="form-control" placeholder="Bairro" readonly id="bairro" />
+				</div>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" placeholder="Cidade" readonly id="cidade"/>
+				</div>
+
+				<div class="col-sm-2">
+					<input type="text" class="form-control" placeholder="UF" readonly  id="estado"/>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
